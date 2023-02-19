@@ -1,0 +1,27 @@
+<?xml version="1.0" ?>
+<launch>
+
+    <include file="$(find planner)/launch/planner.launch">
+        <param name="topo_planner_params" value="topo_planner_1.yaml"/>
+    </include>
+
+    <node pkg="exploration_manager" type="explorer_node" name="explorer_node" output="screen">
+        <remap from="/odometry" to="/base_link/odometry"/>
+        <remap from="/vehicle_execute" to="/path_execution_node/vehicle_execute"/>
+        <remap from="/vehicle_stop" to="/path_execution_node/vehicle_stop"/>
+        <remap from="/topo_planner" to="/topo_planner_node/topo_planner"/>
+
+        <param name="run_mode" value="kSim"/>
+        <param name="frame_id" value="world"/>
+        <param name="init_motion_enable" value="true"/>
+        <param name="init_x" value="3.0"/>
+        <param name="init_y" value="0.1"/>
+        <param name="init_z" value="0"/>
+        <param name="init_need_time" value="2"/>
+
+    </node>
+
+    <!-- statistics and data visualization -->
+    <include file="$(find visualization_tools)/launch/visualization_tools.launch"/>
+
+</launch>

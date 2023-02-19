@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<package>
+  <name>jackal_description</name>
+  <version>0.6.5</version>
+  <description>URDF robot description for Jackal</description>
+
+  <maintainer email="mpurvis@clearpathrobotics.com">Mike Purvis</maintainer>
+
+  <license>BSD</license>
+
+  <author email="mpurvis@clearpathrobotics.com">Mike Purvis</author>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>roslaunch</build_depend>
+  <run_depend>robot_state_publisher</run_depend>
+  <run_depend>urdf</run_depend>
+  <run_depend>xacro</run_depend>
+  <run_depend>lms1xx</run_depend>
+  <run_depend>pointgrey_camera_description</run_depend>
+
+  <export>
+  </export>
+</package>

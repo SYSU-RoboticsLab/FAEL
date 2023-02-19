@@ -1,0 +1,1 @@
+- git: {local-name: mav_comm, uri: 'https://github.com/ethz-asl/mav_comm.git'}

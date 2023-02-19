@@ -1,0 +1,32 @@
+<?xml version="1.0" ?>
+<launch>
+
+    <node pkg="path_execution" type="path_execution_node" name="path_execution_node" output="log">
+        <remap from="/odometry" to="/base_link/odometry"/>
+        <remap from="/terrain_map" to="/traversability_analysis_node/terrain_map"/>
+        <remap from="/goal" to="/move_base_simple/goal"/>
+
+        <param name="global_frame" value="world"/>
+        <param name="local_frame" value="base_link"/>
+        <param name="cloud_voxel_size" value="0.05"/>
+        <param name="grid_size" value="0.15"/>
+        <param name="grid_x_num" value="200"/>
+        <param name="grid_y_num" value="200"/>
+        <param name="inflate_radius" value="0.3"/>
+        <param name="inflate_empty_radius" value="0.3"/>
+        <param name="lower_z" value="0.2"/>
+
+        <param name="control_freq" value="20.0"/>
+        <param name="guide_dist" value="2.5"/>
+        <param name="reach_dist_thres" value="0.35"/>
+        <param name="reach_rot_thres" value="0.26"/>
+        <param name="stop_vel_thres" value="0.05"/>
+        <param name="stop_rot_thres" value="0.09"/>
+
+        <param name="use_sim_time" value="true"/>
+
+
+    </node>
+
+
+</launch>

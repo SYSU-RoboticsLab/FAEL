@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package>
+  <name>jackal_simulator</name>
+  <version>0.3.0</version>
+  <description>Packages for simulating Jackal.</description>
+
+  <maintainer email="mpurvis@clearpathrobotics.com">Mike Purvis</maintainer>
+  <author>Mike Purvis</author>
+
+  <license>BSD</license>
+
+  <url type="website">http://wiki.ros.org/jackal_simulator</url>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <run_depend version_gte="0.3">jackal_gazebo</run_depend>
+
+  <export><metapackage/></export>
+</package>

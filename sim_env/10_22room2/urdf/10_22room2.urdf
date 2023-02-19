@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This URDF was automatically created by SolidWorks to URDF Exporter! Originally created by Stephen Brawner (brawner@gmail.com) 
+     Commit Version: 1.6.0-4-g7f85cfe  Build Version: 1.6.7995.38578
+     For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
+<robot
+  name="10_22room2">
+  <link
+    name="base_link">
+    <inertial>
+      <origin
+        xyz="48.8921428822432 -1.17139840239803E-14 2.5"
+        rpy="0 0 0" />
+      <mass
+        value="1935098.44949343" />
+      <inertia
+        ixx="2360370034.88366"
+        ixy="3.86745731221733E-06"
+        ixz="1.0457124529494E-07"
+        iyy="2059683974.11966"
+        iyz="2.29155435960138E-07"
+        izz="4411991098.7971" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://10_22room2/meshes/base_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.749019607843137 0.529411764705882 0.149019607843137 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://10_22room2/meshes/base_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <link
+    name="fixed1">
+    <inertial>
+      <origin
+        xyz="16.9585875235413 8.62052242418681E-16 0.742247005824651"
+        rpy="0 0 0" />
+      <mass
+        value="109723.569326841" />
+      <inertia
+        ixx="67219.3350585608"
+        ixy="3.25145099749031E-12"
+        ixz="-6.65008815905125E-13"
+        iyy="353673.368090466"
+        iyz="-7.74949548976167E-13"
+        izz="373444.358088869" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://10_22room2/meshes/fixed1.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 0.988235294117647 0.92156862745098 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://10_22room2/meshes/fixed1.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="fixed1"
+    type="fixed">
+    <origin
+      xyz="0 0 0"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="fixed1" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="fixed2">
+    <inertial>
+      <origin
+        xyz="67 0.469465648855002 1"
+        rpy="0 0 0" />
+      <mass
+        value="733600" />
+      <inertia
+        ixx="7261874.66666663"
+        ixy="1.95439546051557E-09"
+        ixz="8.46730093447453E-11"
+        iyy="3369538.66666667"
+        iyz="9.64049084004231E-11"
+        izz="10142346.6666666" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://10_22room2/meshes/fixed2.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.149019607843137 0.909803921568627 0.592156862745098 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://10_22room2/meshes/fixed2.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="fixed2"
+    type="fixed">
+    <origin
+      xyz="0 0 0"
+      rpy="0 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="fixed2" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+</robot>

@@ -1,0 +1,9 @@
+
+int32 iteration_id
+
+---
+Path[]  paths
+
+---
+
+bool is_get_path

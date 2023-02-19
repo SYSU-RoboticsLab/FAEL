@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <!-- Generate a single payload plate standoff. -->
+  <xacro:macro name="standoff" params="name length parent *origin">
+    <link name="${name}">
+      <visual>
+        <origin xyz="0 0 ${length/2}" rpy="0 0 0" />
+        <geometry>
+          <cylinder radius="0.004" length="${length}" />
+        </geometry>
+        <material name="light_grey" />
+      </visual>
+    </link>
+
+    <joint name="${name}_joint" type="fixed">
+      <xacro:insert_block name="origin" />
+      <parent link="${parent}" />
+      <child link="${name}" />
+    </joint>
+  </xacro:macro>
+  
+  <!-- Generate a set of four standoffs from a payload mount point. -->
+  <xacro:macro name="standoff_box" params="mount height">
+    <standoff name="${mount}_standoff0" length="${height}" parent="${mount}_mount">
+      <origin xyz="0.060 0.060 0" rpy="0 0 0"/>
+    </standoff>
+    <standoff name="${mount}_standoff1" length="${height}" parent="${mount}_mount">
+      <origin xyz="0.060 -0.060 0" rpy="0 0 0"/>
+    </standoff>
+    <standoff name="${mount}_standoff2" length="${height}" parent="${mount}_mount">
+      <origin xyz="-0.060 0.060 0" rpy="0 0 0"/>
+    </standoff>
+    <standoff name="${mount}_standoff3" length="${height}" parent="${mount}_mount">
+      <origin xyz="-0.060 -0.060 0" rpy="0 0 0"/>
+    </standoff>
+  </xacro:macro>
+</robot>

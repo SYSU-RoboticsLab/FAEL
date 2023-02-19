@@ -1,0 +1,19 @@
+<?xml version="1.0" ?>
+<launch>
+
+    <param name="/use_sim_time" value="true" />
+
+    <include file="$(find jackal_gazebo)/launch/jackal_world.launch">
+        <arg name="config" value="base"/>
+     
+        <arg name="x" value="0"/>
+        <arg name="y" value="0"/>
+        <arg name="z" value="1.5"/>            
+
+        <arg name="world_name" value="$(find exploration_manager)/worlds/scene_1.world"/>
+        <!-- <arg name="world_name" value="$(find exploration_manager)/worlds/scene_2.world"/> -->
+        <!-- <arg name="world_name" value="$(find exploration_manager)/worlds/scene_3.world"/> -->
+        <!-- <arg name="world_name" value="$(find exploration_manager)/worlds/scene_4.world"/> -->
+
+    </include>
+</launch>

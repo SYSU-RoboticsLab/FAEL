@@ -1,0 +1,4 @@
+
+int32 edge_id
+IdPointPair begin_point
+IdPointPair end_point

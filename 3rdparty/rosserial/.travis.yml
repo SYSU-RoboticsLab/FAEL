@@ -1,0 +1,26 @@
+# This config uses industrial_ci (https://github.com/ros-industrial/industrial_ci.git).
+# For troubleshooting, see readme (https://github.com/ros-industrial/industrial_ci/blob/master/README.rst)
+
+language: generic
+
+services:
+  - docker
+
+cache:
+  directories:
+    - $HOME/.ccache
+
+git:
+  quiet: true
+
+env:
+  global:
+    - ROS_REPO=ros
+    - CCACHE_DIR=$HOME/.ccache
+  matrix:
+    - ROS_DISTRO="noetic" ROS_REPO=ros-shadow-fixed
+
+install:
+  - git clone --quiet --depth 1 https://github.com/ros-industrial/industrial_ci.git .industrial_ci -b master
+script:
+  - .industrial_ci/travis.sh

@@ -1,0 +1,68 @@
+
+# 总类
+frame_id: world
+robot_base_frame_id: base_link
+
+UFOMap:
+  # robot size configuration
+  robot_height: 0.8 
+  robot_bottom: 0.05
+  sensor_height: 0.45 
+
+  # ufomap map configuration
+  resolution: 0.4
+  depth_levels: 16
+  max_range: 12.0 
+
+  frame_id: world  #
+  navigation_frame_id: world 
+  robot_base_frame_id: base_link
+  insert_discrete: true  
+  insert_depth: 0
+  simple_ray_casting: false
+  early_stopping: 0
+  clear_robot_enabled: false
+
+  frontier_depth: 0   
+  pub_rate: 1
+  scan_voxel_size: 0.1
+
+  min_x: -1000.0
+  min_y: -1000.0
+  max_x: 1000
+  max_y: 1000
+
+GridMap2D:
+  frame_id: world
+  grid_size: 0.15
+  inflate_radius: 0.3
+  inflate_empty_radius: 0.3
+  lower_z: 0.2
+  connectivity_thre: 0.1
+
+
+ViewpointManager:
+  frame_id: world
+  sample_dist: 1.0
+  frontier_dist: 15.0
+  viewpoint_gain_thre: 2.0
+
+
+Roadmap:
+  frame_id: world
+  sample_dist: 1.0
+  connectable_range: 3
+  connectable_num: 3
+
+RapidCoverPlanner:
+  max_tour_point_num: 100
+  viewpoint_ignore_thre: 0.5
+  local_range: 24.0
+  frontier_gain: 100.0
+  tourpoint_ignore_thre: 0.8
+  tourpoint_ignore_distance: 3.0
+  is_directory: true
+  alpha: 0.9
+
+
+

@@ -1,0 +1,240 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="VLP_16">
+  <xacro:property name="M_PI" value="3.1415926535897931" />
+  <xacro:macro name="VLP_16" params="*origin parent:=base_link name:=VLP_16 namespace:=velodyne topic:=/velodyne_points hz:=10 lasers:=16 samples:=1875 collision_range:=0.3 min_range:=0.9 max_range:=130.0 noise:=0.008 min_angle:=-${M_PI} max_angle:=${M_PI} gpu:=false">
+
+    <joint name="${namespace}/VLP_16_base_mount_joint" type="fixed">
+      <xacro:insert_block name="origin" /> 
+      <parent link="${parent}"/>
+      <child link="${namespace}/VLP_16_base_link"/>
+    </joint>
+
+    <link name="${namespace}/VLP_16_base_link">
+      <inertial>
+       <!--mass original 0.83, changed for mav-->
+        <!-- <mass value="0.83"/> -->
+        <mass value="1e-5"/>
+        <origin xyz="0 0 0.03585"/>
+        <inertia ixx="${(0.83 * (3.0*0.0516*0.0516 + 0.0717*0.0717)) / 12.0}" ixy="0" ixz="0"
+          iyy="${(0.83 * (3.0*0.0516*0.0516 + 0.0717*0.0717)) / 12.0}" iyz="0"
+          izz="${0.5 * 0.83 * (0.0516*0.0516)}"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="package://velodyne_description/meshes/VLP16_base_1.dae" />
+        </geometry>
+      </visual>
+      <visual>
+        <geometry>
+          <mesh filename="package://velodyne_description/meshes/VLP16_base_2.dae" />
+        </geometry>
+      </visual>
+      <collision>
+        <origin rpy="0 0 0" xyz="0 0 0.03585"/>
+        <geometry>
+          <!-- <cylinder radius="0.0516" length="0.0717"/> -->
+          <cylinder radius="0.00001" length="0.0001"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="${namespace}/VLP_16_base_scan_joint" type="fixed" >
+      <origin xyz="0 0 0.0377" rpy="0 0 0" />
+      <parent link="${namespace}/VLP_16_base_link" />
+      <child link="${namespace}/VLP_16"/>
+    </joint>
+
+    <link name="${namespace}/VLP_16">
+      <inertial>
+        <!--mass original 0.01, changed for mav-->
+        <mass value="0.00001"/>
+        <origin xyz="0 0 0"/>
+        <inertia ixx="1e-7" ixy="0" ixz="0" iyy="1e-7" iyz="0" izz="1e-7"/>
+      </inertial>
+      <visual>
+        <origin xyz="0 0 -0.0377" />
+        <geometry>
+          <mesh filename="package://velodyne_description/meshes/VLP16_scan.dae" />
+        </geometry>
+      </visual>
+    </link>
+
+    <!-- Gazebo requires the velodyne_gazebo_plugins package -->
+    <gazebo reference="${namespace}/VLP_16">
+      <xacro:if value="${gpu}">
+        <sensor type="gpu_ray" name="${namespace}_VLP_16">
+          <pose>0 0 0 0 0 0</pose>
+          <!-- Gazebo visualize ray-cast or not. Default:false -->
+          <visualize>false</visualize>
+          <update_rate>${hz}</update_rate>
+          <ray>
+            <scan>
+              <horizontal>
+                <samples>${samples}</samples>
+                <resolution>1</resolution>
+                <min_angle>${min_angle}</min_angle>
+                <max_angle>${max_angle}</max_angle>
+              </horizontal>
+              <vertical>
+                <samples>${lasers}</samples>
+                <resolution>1</resolution>
+                <min_angle>-${15.0*M_PI/180.0}</min_angle>
+                <max_angle> ${15.0*M_PI/180.0}</max_angle>
+              </vertical>
+            </scan>
+            <range>
+              <min>${collision_range}</min>
+              <max>${max_range+1}</max>
+              <resolution>0.001</resolution>
+            </range>
+            <noise>
+              <type>gaussian</type>
+              <mean>0.0</mean>
+              <stddev>0.0</stddev>
+            </noise>
+          </ray>
+          <plugin name="{namespace}_gazebo_ros_laser_controller" filename="libgazebo_ros_velodyne_gpu_laser.so">
+            <robotNamespace>${namespace}</robotNamespace>
+            <topicName>${topic}</topicName>
+            <frameName>VLP_16</frameName>
+            <min_range>${min_range}</min_range>
+            <max_range>${max_range}</max_range>
+            <gaussianNoise>${noise}</gaussianNoise>
+          </plugin>
+        </sensor>
+      </xacro:if>
+      <xacro:unless value="${gpu}">
+        <sensor type="ray" name="${namespace}_VLP_16">
+          <pose>0 0 0 0 0 0</pose>
+          <visualize>false</visualize>
+          <update_rate>${hz}</update_rate>
+          <ray>
+            <scan>
+              <horizontal>
+                <samples>${samples}</samples>
+                <resolution>1</resolution>
+                <min_angle>${min_angle}</min_angle>
+                <max_angle>${max_angle}</max_angle>
+              </horizontal>
+              <vertical>
+                <samples>${lasers}</samples>
+                <resolution>1</resolution>
+                <min_angle>-${15.0*M_PI/180.0}</min_angle>
+                <max_angle> ${15.0*M_PI/180.0}</max_angle>
+              </vertical>
+            </scan>
+            <range>
+              <min>${collision_range}</min>
+              <max>${max_range+1}</max>
+              <resolution>0.001</resolution>
+            </range>
+            <noise>
+              <type>gaussian</type>
+              <mean>0.0</mean>
+              <stddev>0.0</stddev>
+            </noise>
+          </ray>
+          <plugin name="{namespace}_gazebo_ros_laser_controller" filename="libgazebo_ros_velodyne_laser.so">
+            <robotNamespace>${namespace}</robotNamespace>
+            <topicName>${topic}</topicName>
+            <frameName>VLP_16</frameName>
+            <min_range>${min_range}</min_range>
+            <max_range>${max_range}</max_range>
+            <gaussianNoise>${noise}</gaussianNoise>
+          </plugin>
+        </sensor>
+      </xacro:unless>
+    </gazebo>
+  </xacro:macro>
+
+  <!-- Macro to add a generic odometry sensor. -->
+  <!--  挂在哪，就输出哪里的真值-->
+  <xacro:macro name="odometry_plugin_macro"
+               params="
+      namespace odometry_sensor_suffix parent_link pose_topic pose_with_covariance_topic
+      position_topic transform_topic odometry_topic parent_frame_id child_frame_id
+      mass_odometry_sensor measurement_divisor measurement_delay unknown_delay
+      noise_normal_position noise_normal_quaternion noise_normal_linear_velocity
+      noise_normal_angular_velocity noise_uniform_position
+      noise_uniform_quaternion noise_uniform_linear_velocity
+      noise_uniform_angular_velocity enable_odometry_map odometry_map
+      image_scale *inertia *origin">
+    <!-- odometry link -->
+    <link name="${namespace}/odometry_sensor${odometry_sensor_suffix}_link">
+      <inertial>
+        <xacro:insert_block name="inertia" />
+        <mass value="${mass_odometry_sensor}" />  <!-- [kg] -->
+      </inertial>
+    </link>
+    <!-- odometry joint -->
+    <joint name="${namespace}/odometry_sensor${odometry_sensor_suffix}_joint" type="revolute">
+      <parent link="${parent_link}" />
+      <xacro:insert_block name="origin" />
+      <child link="${namespace}/odometry_sensor${odometry_sensor_suffix}_link" />
+      <limit upper="0" lower="0" effort="0" velocity="0" />
+    </joint>
+    <gazebo>
+      <plugin filename="librotors_gazebo_odometry_no_tf_plugin.so" name="odometry_sensor${odometry_sensor_suffix}">
+        <linkName>${namespace}/odometry_sensor${odometry_sensor_suffix}_link</linkName>
+        <robotNamespace>${namespace}</robotNamespace>
+        <poseTopic>${pose_topic}</poseTopic>
+        <poseWithCovarianceTopic>${pose_with_covariance_topic}</poseWithCovarianceTopic>
+        <positionTopic>${position_topic}</positionTopic>
+        <transformTopic>${transform_topic}</transformTopic>
+        <odometryTopic>${odometry_topic}</odometryTopic>
+        <parentFrameId>${parent_frame_id}</parentFrameId> <!-- Use the scoped link name here. e.g. Model::link. -->
+        <childFrameId>${child_frame_id}</childFrameId>
+        <measurementDivisor>${measurement_divisor}</measurementDivisor> <!-- only every (seq % measurementDivisor) == 0 measurement is published [int] -->
+        <measurementDelay>${measurement_delay}</measurementDelay> <!-- time that measurement gets held back before it's published in [simulation cycles (int)] -->
+        <unknownDelay>${unknown_delay}</unknownDelay> <!-- additional delay, that just gets added to the timestamp [s] -->
+        <noiseNormalPosition>${noise_normal_position}</noiseNormalPosition> <!-- standard deviation of additive white gaussian noise [m] -->
+        <noiseNormalQuaternion>${noise_normal_quaternion}</noiseNormalQuaternion> <!-- standard deviation white gaussian noise [rad]: q_m = q*quaternionFromSmallAngleApproximation(noiseNormalQ) -->
+        <noiseNormalLinearVelocity>${noise_normal_linear_velocity}</noiseNormalLinearVelocity> <!-- standard deviation of additive white gaussian noise [m/s] -->
+        <noiseNormalAngularVelocity>${noise_normal_angular_velocity}</noiseNormalAngularVelocity> <!-- standard deviation of additive white gaussian noise [rad/s] -->
+        <noiseUniformPosition>${noise_uniform_position}</noiseUniformPosition> <!-- symmetric bounds of uniform noise [m] -->
+        <noiseUniformQuaternion>${noise_uniform_quaternion}</noiseUniformQuaternion> <!-- symmetric bounds of uniform noise [rad], computation see above -->
+        <noiseUniformLinearVelocity>${noise_uniform_linear_velocity}</noiseUniformLinearVelocity> <!-- symmetric bounds of uniform noise [m/s] -->
+        <noiseUniformAngularVelocity>${noise_uniform_angular_velocity}</noiseUniformAngularVelocity> <!-- symmetric bounds of uniform noise [rad/s] -->
+        <xacro:if value="${enable_odometry_map}">
+          <covarianceImage>package://rotors_gazebo/resource/${odometry_map}</covarianceImage> <!-- a bitmap image describing where the sensor works (white), and where not (black) -->
+          <covarianceImageScale>${image_scale}</covarianceImageScale> <!-- the scale of the image in the gazebo world, if set to 1.0, 1 pixel in the image corresponds to 1 meter in the world -->
+        </xacro:if>
+      </plugin>
+    </gazebo>
+  </xacro:macro>
+
+  <!-- child frame need check -->
+  <xacro:odometry_plugin_macro
+          namespace="${namespace}/velodyne/gazebo_gt"
+          odometry_sensor_suffix=""
+          parent_link="${namespace}/velodyne/VLP_16"
+          pose_topic="pose"
+          pose_with_covariance_topic="pose_with_covariance"
+          position_topic="position"
+          transform_topic="transform"
+          odometry_topic="odometry"
+          parent_frame_id="world"
+          child_frame_id="${namespace}/velodyne/VLP_16"
+          mass_odometry_sensor="0.00001"
+          measurement_divisor="1"
+          measurement_delay="0"
+          unknown_delay="0.0"
+          noise_normal_position="0 0 0"
+          noise_normal_quaternion="0 0 0"
+          noise_normal_linear_velocity="0 0 0"
+          noise_normal_angular_velocity="0 0 0"
+          noise_uniform_position="0 0 0"
+          noise_uniform_quaternion="0 0 0"
+          noise_uniform_linear_velocity="0 0 0"
+          noise_uniform_angular_velocity="0 0 0"
+          enable_odometry_map="false"
+          odometry_map=""
+          image_scale="">
+    <inertia ixx="0.00001" ixy="0.0" ixz="0.0" iyy="0.00001" iyz="0.0" izz="0.00001" />
+    <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+  </xacro:odometry_plugin_macro>
+
+
+
+
+</robot>

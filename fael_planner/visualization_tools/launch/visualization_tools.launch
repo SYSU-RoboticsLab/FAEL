@@ -1,0 +1,22 @@
+<?xml version="1.0" ?>
+<launch>
+
+    <node pkg="visualization_tools" type="exploration_data" name="exploration_data" output="log">
+        <remap from="/explorer_inited" to="/explorer_node/explorer_inited"/>
+        <remap from="/explorer_finish" to="/explorer_node/explorer_finish"/>
+        <remap from="/odometry" to="/base_link/odometry"/>
+        <remap from="/ufomap_and_frontiers" to="/topo_planner_node/ufomap_and_frontiers"/>
+        <remap from="/iteration_time" to="/topo_planner_node/iteration_time"/>
+
+        <param name="map_area" value="4582"/>
+        <!-- <param name="map_area" value="4146"/> -->
+        <!-- <param name="map_area" value="9601"/> -->
+        <!-- <param name="map_area" value="12129"/> -->
+
+        <param name="max_time" value="2000000000.0"/>
+
+    </node>
+
+    <node pkg="visualization_tools" type="realTimePlot.py" name="realTimePlot" output="log" respawn="true"/>
+</launch>
+

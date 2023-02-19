@@ -1,0 +1,40 @@
+<?xml version="1.0" ?>
+<launch>
+
+    <arg name="sensor_frame_id" default="sensor"/>
+    <arg name="sensor_init_frame_id" default="map"/>
+    <arg name="world_frame_id" default="world"/>
+    <arg name="robot_base_frame_id" default="base_link"/>
+
+    <node name="slam_sim_output" pkg="sensor_conversion" type="slam_sim_output_node" output="log">
+        <remap from="/odometry" to="/jackal/velodyne/gazebo_gt/odometry"/>
+        <remap from="/point_cloud" to="/jackal/velodyne/velodyne_points"/>
+        <remap from="/odometry_init" to="/laser_odom_init"/>
+        <remap from="/registered_scan" to="/registered_point_cloud"/>
+    
+        <param name="frame_id" value="$(arg sensor_init_frame_id)"/>
+        <param name="child_frame_id" value="$(arg sensor_frame_id)"/>
+        <param name="down_voxel_size" value="0.1"/>
+        <param name="use_sim_time" value="true"/>
+    </node>
+
+    <node pkg="tf" type="static_transform_publisher" name="map_to_world" args="0.0 0 0.456 0 0 0  $(arg world_frame_id) $(arg sensor_init_frame_id) 10 "/>
+    <node pkg="tf" type="static_transform_publisher" name="sensor_to_base_link" args="-0.0 0 -0.456 0 0 0  $(arg sensor_frame_id) $(arg robot_base_frame_id) 10"/>
+
+    <node name="sensor_odom_to_world" pkg="sensor_conversion" type="sensor_odom_to_world_node" output="log">
+        <remap from="/sensor/sensor_init/odometry" to="/laser_odom_init"/>
+        <remap from="/sensor/world/odometry" to="/sensor_to_world/odometry"/>
+        <remap from="/base_link/world/odometry" to="/base_link/odometry"/>
+
+        <param name="world_frame" value="$(arg world_frame_id)"/>
+        <param name="target_frame" value="$(arg robot_base_frame_id)"/>
+        <param name="use_sim_time" value="true"/>
+    </node>
+
+    <include file="$(find traversability_analysis)/launch/traversability_analysis_3d.launch"/>
+
+    <include file="$(find path_execution)/launch/path_execution.launch"/>
+    <include file="$(find terrain_analysis)/launch/terrain_analysis.launch"/>
+    <include file="$(find local_planner)/launch/local_planner.launch"/>
+
+</launch>

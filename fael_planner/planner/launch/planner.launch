@@ -1,0 +1,26 @@
+<?xml version="1.0" ?>
+<launch>
+    
+    <arg name="topo_planner_params" default="topo_planner_1.yaml"/>
+
+    <!-- <node pkg="planner" type="topo_planner_node" name="topo_planner_node" output="screen"> -->
+    <node pkg="planner" type="topo_planner_node" name="topo_planner_node" output="log">
+        <remap from="/odometry" to="/base_link/odometry"/>
+        <remap from="/explorer_inited" to="/explorer_node/explorer_inited"/>
+
+        <!-- UFOMap -->
+        <remap from="point_cloud" to="/jackal/velodyne/velodyne_points"/>
+        <remap from="sensor_odometry" to="/sensor_to_world/odometry"/>
+
+        <!-- GridMap2D -->
+        <remap from="/base_odometry" to="/base_link/odometry"/>
+        <remap from="/terrain_map" to="/traversability_analysis_node/terrain_map"/>
+
+        <!-- load planner params -->
+        <rosparam file="$(find planner)/resource/$(arg topo_planner_params)" command="load"/>
+
+    </node>
+    
+    <node name="planner_rviz" pkg="rviz" type="rviz" args="-d $(find planner)/resource/topo_planner.rviz"/>
+
+</launch>

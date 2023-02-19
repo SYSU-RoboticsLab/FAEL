@@ -1,0 +1,49 @@
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:macro name="stereo_camera_mount" params="prefix tilt:=0">
+
+    <link name="${prefix}_stereo_camera_mount" />
+
+    <link name="${prefix}_stereo_camera_bracket">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://jackal_description/meshes/stereo-camera-bracket.stl" />
+        </geometry>
+        <material name="dark_grey" />
+      </visual>
+    </link>
+
+    <link name="${prefix}_stereo_camera_beam">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://jackal_description/meshes/stereo-camera-beam.stl" />
+        </geometry>
+        <material name="dark_grey" />
+      </visual>
+    </link>
+
+    <joint name="${prefix}_stereo_camera_bracket_joint" type="fixed">
+      <origin xyz="0.060 0 0.0225" rpy="0 0 0" />
+      <parent link="${prefix}_stereo_camera_mount" />
+      <child link="${prefix}_stereo_camera_bracket" />
+    </joint>
+
+    <joint name="${prefix}_stereo_camera_pivot_joint" type="fixed">
+      <origin xyz="0 0 0" rpy="0 ${tilt} 0" />
+      <parent link="${prefix}_stereo_camera_bracket" />
+      <child link="${prefix}_stereo_camera_beam" />
+    </joint>
+
+    <gazebo reference="${prefix}_stereo_camera_beam">
+      <material>Gazebo/DarkGrey</material>
+    </gazebo>
+
+    <gazebo reference="${prefix}_stereo_camera_bracket">
+      <material>Gazebo/DarkGrey</material>
+    </gazebo>
+
+  </xacro:macro>
+
+</robot>

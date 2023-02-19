@@ -1,0 +1,8 @@
+std_msgs/Header  header
+Path[] paths
+---
+bool finish
+
+---
+geometry_msgs/Pose current_pose
+int32 current_waypoint_id

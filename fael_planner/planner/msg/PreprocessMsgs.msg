@@ -1,0 +1,8 @@
+
+Header header
+
+ufomap_manager/UfomapWithFrontiers ufomap_with_frontiers
+
+ViewpointsWithFrontiers[] viewpoint_frontiers_set
+
+RoadMapMsg road_map_msg
