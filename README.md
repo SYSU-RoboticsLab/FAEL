@@ -65,7 +65,7 @@ python3-tk
 Then simply clone and compile our package (using ssh here):
 ```bash
 cd ${YOUR_WORKSPACE_PATH}/src
-git clone <github address>
+git clone https://github.com/SYSU-RoboticsLab/FAEL.git
 cd ../ 
 catkin_make
 ```
