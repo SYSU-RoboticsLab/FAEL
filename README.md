@@ -96,9 +96,9 @@ The exploration environments in our simulator are represented by `*.world` files
 
 ## Known issues
 __If you find any other problem, please point it out and we will try our best to address it.__
-### Degradation of exploratory performance
+### Degradation of point cloud in simulation
 __Noted:__ We assume that there are 2 graphics cards (**integrated graphics card** and **discrete graphics card**) on your computer.   
-As we use GPU for Velodyne VLP-16 LiDAR in simulation, if you use the integrated graphics card on ubuntu, the exploratory performance of FAEL would degrade. To address this problem, we recommend that you switch to discrete graphics card. Take **Intel Graphics Card** and **Nvidia Graphics Card** as an example here.
+As we use GPU for Velodyne VLP-16 LiDAR in simulation, if you use the integrated graphics card on ubuntu, the point cloud of Lidar would degrade, resulting in failed exploration. To address this problem, we recommend that you switch to discrete graphics card. Take **Intel Graphics Card** and **Nvidia Graphics Card** as an example here.
 1. Install Nvidia Graphics Card Driver
   
 Open up a new terminal window and enter the following command to see which driver is **recommended** for your specific card.
