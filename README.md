@@ -95,12 +95,17 @@ The exploration environments in our simulator are represented by `*.world` files
 * scene_4.world : 12129
 
 ## Known issues
-__If you find any other problem, please point it out and we will try our best to address it.__
-### Degradation of point cloud in simulation
-__Noted:__ We assume that there are 2 graphics cards (**integrated graphics card** and **discrete graphics card**) on your computer.   
+***Noted:*** __If you find any other problem, please point it out and we will try our best to address it.__
+
+### Degradation of the point cloud in simulation
+
+If you find that the planned path is obviously weird and the exploration efficiency drops significantly compared with our paper, it is possibly caused by the degradation of the point cloud. In this case, we recommend that you use a discrete graphics card or a better discrete graphics card.
+
+__*Noted:*__ We assume that there are 2 graphics cards (**integrated graphics card** and **discrete graphics card**) on your computer.   
 As we use GPU for Velodyne VLP-16 LiDAR in simulation, if you use the integrated graphics card on ubuntu, the point cloud of Lidar would degrade, resulting in failed exploration. To address this problem, we recommend that you switch to discrete graphics card. Take **Intel Graphics Card** and **Nvidia Graphics Card** as an example here.
+
 1. Install Nvidia Graphics Card Driver
-  
+
 Open up a new terminal window and enter the following command to see which driver is **recommended** for your specific card.
 ```bash
 ubuntu-drivers devices
