@@ -64,6 +64,7 @@ def listener():
     plt.subplots_adjust(wspace=0.3, hspace=0.3)
 
     fig1 = fig.add_subplot(221)
+    fig1.set_title('Explored Volume')
     plt.margins(x=0.0001, y=0.0001)
     fig1.set_ylabel("Explored\nVolume (m$^2$)", fontsize=8)
     fig1.set_xlabel("Time (s)", fontsize=8)
@@ -73,6 +74,7 @@ def listener():
                     label='Explored Volume')
 
     fig2 = fig.add_subplot(222)
+    fig2.set_title('Traveling Distance')
     fig2.set_ylabel("Traveling\nDistance (m)", fontsize=8)
     fig2.set_xlabel("Time (s)", fontsize=8)
     l2, = fig2.plot(time_list2,
@@ -81,6 +83,7 @@ def listener():
                     label='Traveling Distance')
 
     fig3 = fig.add_subplot(223)
+    fig3.set_title('Volume Distance')
     fig3.set_ylabel("Explored\nVolume (m$^2$)", fontsize=8)
     fig3.set_xlabel("Traveling Distance (m)", fontsize=8)  # only set once
     l3, = fig3.plot(traveling_distance_list,
@@ -89,6 +92,7 @@ def listener():
                     label='Volume Distance')
 
     fig4 = fig.add_subplot(224)
+    fig4.set_title('Algorithm Runtime')
     fig4.set_ylabel("Algorithm\nRuntime (s)", fontsize=8)
     fig4.set_xlabel("Time (s)", fontsize=8)  # only set once
     l4, = fig4.plot(time_list3,
