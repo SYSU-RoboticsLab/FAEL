@@ -50,36 +50,52 @@ def iteration_time_callback(msg):
         max_run_time = run_time
 
 
-
 def listener():
     global explored_volume, traveling_distance, run_time, max_explored_volume, max_traveling_distance, max_run_time, time_list1, time_list2, time_list3, run_time_list, explored_volume_list, traveling_distance_list
 
     rospy.init_node('realTimePlot')
 
-    rospy.Subscriber("/explored_volume_traved_dist_time", ExploredVolumeTravedDistTime, exploration_data_callback)
+    rospy.Subscriber("/explored_volume_traved_dist_time",
+                     ExploredVolumeTravedDistTime, exploration_data_callback)
     rospy.Subscriber("/run_time", IterationTime, iteration_time_callback)
 
-    fig = plt.figure(figsize=(10, 8))   
-    fig1 = fig.add_subplot(321)
-    plt.title("Exploration Metrics\n", fontsize=12)
-    plt.margins(x=0.0001,y=0.0001)
+    fig = plt.figure(figsize=(10, 8))
+    plt.suptitle("Exploration Metrics\n", fontsize=18)
+    plt.subplots_adjust(wspace=0.3, hspace=0.3)
+
+    fig1 = fig.add_subplot(221)
+    plt.margins(x=0.0001, y=0.0001)
     fig1.set_ylabel("Explored\nVolume (m$^2$)", fontsize=8)
     fig1.set_xlabel("Time (s)", fontsize=8)
-    l1, = fig1.plot(time_list1, explored_volume_list, color='r', label='Explored Volume')
-    fig2 = fig.add_subplot(323)
+    l1, = fig1.plot(time_list1,
+                    explored_volume_list,
+                    color='r',
+                    label='Explored Volume')
+
+    fig2 = fig.add_subplot(222)
     fig2.set_ylabel("Traveling\nDistance (m)", fontsize=8)
     fig2.set_xlabel("Time (s)", fontsize=8)
-    l2, = fig2.plot(time_list2, traveling_distance_list, color='r', label='Traveling Distance')
+    l2, = fig2.plot(time_list2,
+                    traveling_distance_list,
+                    color='r',
+                    label='Traveling Distance')
 
-    fig3 = fig.add_subplot(325)
+    fig3 = fig.add_subplot(223)
     fig3.set_ylabel("Explored\nVolume (m$^2$)", fontsize=8)
     fig3.set_xlabel("Traveling Distance (m)", fontsize=8)  # only set once
-    l3, = fig3.plot(traveling_distance_list, explored_volume_list, color='r', label='Volume Distance')
+    l3, = fig3.plot(traveling_distance_list,
+                    explored_volume_list,
+                    color='r',
+                    label='Volume Distance')
 
-    fig4 = fig.add_subplot(322)
+    fig4 = fig.add_subplot(224)
     fig4.set_ylabel("Algorithm\nRuntime (s)", fontsize=8)
     fig4.set_xlabel("Time (s)", fontsize=8)  # only set once
-    l4, = fig4.plot(time_list3, run_time_list, 'o', color='r', label='Algorithm Runtime')
+    l4, = fig4.plot(time_list3,
+                    run_time_list,
+                    'o',
+                    color='r',
+                    label='Algorithm Runtime')
 
     count = 0
     r = rospy.Rate(100)  # 100hz
@@ -92,9 +108,11 @@ def listener():
             max_traveling_distance = traveling_distance
 
             time_list1 = np.append(time_list1, time_duration1)
-            explored_volume_list = np.append(explored_volume_list, explored_volume)
+            explored_volume_list = np.append(explored_volume_list,
+                                             explored_volume)
             time_list2 = np.append(time_list2, time_duration2)
-            traveling_distance_list = np.append(traveling_distance_list, traveling_distance)
+            traveling_distance_list = np.append(traveling_distance_list,
+                                                traveling_distance)
 
         if count >= 100:
             count = 0
