@@ -59,7 +59,7 @@ libignition-common3-profiler-dev \
 python3-tk
 ```
 
-2. Before running FAEL, we recommend that you download [gazebo_models](https://github.com/osrf/gazebo_models) in advance, and put them in directory `~/.gazebo`.
+2. Before running FAEL, we recommend that you download [gazebo_models](https://github.com/osrf/gazebo_models) in advance, and put them in directory `~/.gazebo/models`.
 
 ## Build FAEL on ROS
 Then simply clone and compile our package (using ssh here):
