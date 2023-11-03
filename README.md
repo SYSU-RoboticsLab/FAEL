@@ -43,6 +43,7 @@ Please cite our paper if you use this project in your research:
 1. This project has been tested on __Ubuntu 20.04(ROS Noetic)__, run the following commands to install required tools:
 ```bash
 sudo apt-get install ros-noetic-navigation \
+ros-noetic-gazebo-* \
 ros-noetic-gazebo-ros-control* \
 ros-noetic-controller-* \
 ros-noetic-tf2-* \
@@ -56,7 +57,7 @@ ros-noetic-interactive-marker-twist-server \
 libgoogle-glog-dev \
 libignition-common3-graphics-dev \
 libignition-common3-profiler-dev \
-python3-tk
+python3-tk 
 ```
 
 2. Before running FAEL, we recommend that you download [gazebo_models](https://github.com/osrf/gazebo_models) in advance, and put them in directory `~/.gazebo/models`.
