@@ -77,15 +77,15 @@ void UFOMapDisplay::onInitialize()
 
 	info_property_ = new rviz::Property("Information", QVariant(), "", this);
 	resolution_property_ = new rviz::StringProperty(
-	    "Resolution", "", "Resolution of the occupancy map", info_property_, nullptr, this);
+	    "Resolution", "", "Resolution of the occupancy map", info_property_, SLOT(info_property_), this);
 	num_leaf_nodes_property_ =
 	    new rviz::StringProperty("# Leaf Nodes", "", "Number of leaf nodes in the octree",
-	                             info_property_, nullptr, this);
+	                             info_property_, SLOT(info_property_), this);
 	num_inner_nodes_property_ =
 	    new rviz::StringProperty("# Inner Nodes", "", "Number of inner nodes in the octree",
-	                             info_property_, nullptr, this);
+	                             info_property_, SLOT(info_property_), this);
 	size_property_ = new rviz::StringProperty("Size", "", "Size of the octree",
-	                                          info_property_, nullptr, this);
+	                                          info_property_, SLOT(info_property_), this);
 
 	render_category_property_ = new rviz::Property("Voxel Rendering", QVariant(), "", this);
 	for (VoxelType const& type : {OCCUPIED, FREE, UNKNOWN}) {
